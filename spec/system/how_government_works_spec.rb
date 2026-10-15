@@ -11,6 +11,15 @@ RSpec.describe "How Government Works" do
       expect(page).to have_title("How government works")
     end
 
+    it "accurately describes ministerial appointment authority during the transition" do
+      visit base_path
+
+      expect(page).to have_text("advises the Lord Lieutenant on the appointment of ministers")
+      expect(page).to have_text("is the principal government figure in Parliament")
+      expect(page).not_to have_text("appoints members of the government")
+      expect(page).not_to have_text("is the principal government figure in the House of Commons")
+    end
+
     it "displays the current prime minister" do
       visit base_path
 
