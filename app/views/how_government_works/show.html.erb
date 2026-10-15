@@ -83,7 +83,7 @@
           } %>
 
           <% if content_item.current_prime_minister.present? %>
-            <p class="govuk-body">The Chief Minister is <%= link_to content_item.current_prime_minister.title, content_item.current_prime_minister.base_path, class: "govuk-link" %>.</p>
+            <p class="govuk-body">The Chief Minister is <%= content_item.current_prime_minister.title %>.</p>
           <% end %>
 
           <p class="govuk-body govuk-!-margin-bottom-8">
