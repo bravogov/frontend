@@ -24,5 +24,8 @@ COPY --from=builder $BUNDLE_PATH $BUNDLE_PATH
 COPY --from=builder $BOOTSNAP_CACHE_DIR $BOOTSNAP_CACHE_DIR
 COPY --from=builder $APP_HOME .
 
+# Keep the runtime fragment cache writable when Puma runs as the unprivileged app user.
+USER root
+RUN mkdir -p /tmp/cache && chown -R app:app /tmp/cache
 USER app
 CMD ["puma"]
