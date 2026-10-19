@@ -12,7 +12,7 @@
     <%= contact.post_address %>
   <% end %>
 
-  <% if contact.email.present? || contact.contact_form_link.present? || contact.phone_number_groups&.any? %>
+  <% if contact.email.present? || contact.contact_form_link.present? %>
 
       <% if contact.email.present? %>
         <p class="govuk-body">
@@ -27,12 +27,7 @@
           </p>
         <% end %>
 
-      <% contact.phone_number_groups&.each do |number| %>
-        <p class="govuk-body">
-          <%= number["title"] %> <br>
-          <span dir="ltr"><%= number["number"] %></span>
-        </p>
-      <% end %>
+
   <% end %>
 
   <% if contact.comments.present? %>

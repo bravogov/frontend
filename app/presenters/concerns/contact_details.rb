@@ -7,10 +7,6 @@ module ContactDetails
     content_item["details"]["post_addresses"] || []
   end
 
-  def phone_number_groups
-    content_item["details"]["phone_numbers"] || []
-  end
-
   def online_form_links
     contact_form_links = content_item["details"]["contact_form_links"] || []
     contact_form_links.map do |link|
