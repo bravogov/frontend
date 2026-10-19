@@ -7,8 +7,9 @@ module ContactDetails
     content_item["details"]["post_addresses"] || []
   end
 
-  def phone_number_groups
-    content_item["details"]["phone_numbers"] || []
+  def discord_contact_url
+    link = (content_item["details"]["quick_links"] || []).find { |item| item["title"] == "Discord" }
+    link&.dig("url")
   end
 
   def online_form_links

@@ -12,7 +12,7 @@
     <%= contact.post_address %>
   <% end %>
 
-  <% if contact.email.present? || contact.contact_form_link.present? || contact.phone_number_groups&.any? %>
+  <% if contact.email.present? || contact.contact_form_link.present? || contact.discord_contact_url.present? %>
 
       <% if contact.email.present? %>
         <p class="govuk-body">
@@ -27,10 +27,10 @@
           </p>
         <% end %>
 
-      <% contact.phone_number_groups&.each do |number| %>
+      <% if contact.discord_contact_url.present? %>
         <p class="govuk-body">
-          <%= number["title"] %> <br>
-          <span dir="ltr"><%= number["number"] %></span>
+          Discord<br>
+          <%= link_to "Open Discord", contact.discord_contact_url, class: "govuk-link" %>
         </p>
       <% end %>
   <% end %>
