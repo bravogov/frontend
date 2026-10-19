@@ -12,7 +12,7 @@
     <%= contact.post_address %>
   <% end %>
 
-  <% if contact.email.present? || contact.contact_form_link.present? || contact.discord_contact_url.present? %>
+  <% if contact.email.present? || contact.contact_form_link.present? %>
 
       <% if contact.email.present? %>
         <p class="govuk-body">
@@ -27,12 +27,7 @@
           </p>
         <% end %>
 
-      <% if contact.discord_contact_url.present? %>
-        <p class="govuk-body">
-          Discord<br>
-          <%= link_to "Open Discord", contact.discord_contact_url, class: "govuk-link" %>
-        </p>
-      <% end %>
+
   <% end %>
 
   <% if contact.comments.present? %>
