@@ -7,11 +7,6 @@ module ContactDetails
     content_item["details"]["post_addresses"] || []
   end
 
-  def discord_contact_url
-    link = (content_item["details"]["quick_links"] || []).find { |item| item["title"] == "Discord" }
-    link&.dig("url")
-  end
-
   def online_form_links
     contact_form_links = content_item["details"]["contact_form_links"] || []
     contact_form_links.map do |link|
