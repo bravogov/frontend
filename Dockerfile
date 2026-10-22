@@ -24,5 +24,7 @@ COPY --from=builder $BUNDLE_PATH $BUNDLE_PATH
 COPY --from=builder $BOOTSNAP_CACHE_DIR $BOOTSNAP_CACHE_DIR
 COPY --from=builder $APP_HOME .
 
+RUN mkdir -p /tmp/cache && chown app:app /tmp/cache
+
 USER app
 CMD ["puma"]
