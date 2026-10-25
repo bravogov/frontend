@@ -18,7 +18,7 @@ RSpec.describe "Sign in" do
 
       expect(page).to have_title("Sign in to a service")
 
-      expect(page).to have_text("Search GOV.UK for a service")
+      expect(page).to have_text("Search GOV.UH for a service")
       expect(page).to have_button("Search")
     end
 
@@ -28,16 +28,19 @@ RSpec.describe "Sign in" do
       expect(page).to have_field("content_purpose_supergroup[]", type: :hidden, with: "services")
     end
 
-    it "includes the most viewed header" do
+    it "explains how to find UH service accounts" do
       visit "/sign-in"
 
-      expect(page).to have_text("Sign in to one of the most viewed services")
+      expect(page).to have_text("Find services and account guidance")
     end
 
-    it "includes the most-viewed links" do
+    it "links to actual UH service discovery rather than UK accounts" do
       visit "/sign-in"
 
-      expect(page).to have_link("HMRC services", href: "/log-in-register-hmrc-online-services")
+      expect(page).to have_link("Search GOV.UH services and information", href: "/search/all")
+      expect(page).to have_link("Departments and public bodies", href: "/government/organisations")
+      expect(page).to have_no_link("HMRC services")
+      expect(page).to have_no_link("Get the GOV.UK app")
     end
   end
 end
