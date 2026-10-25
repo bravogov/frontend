@@ -10,7 +10,7 @@
 <% end %>
 
 <% content_for :title do %>
-  <%= content_item_presenter.page_title %> - GOV.UK
+  <%= content_item_presenter.page_title %> - GOV.UH
 <% end %>
 
 <% content_for :header do %>
@@ -20,7 +20,7 @@
 <% content_for :content do %>
   <% if content_item.first_part? %>
     <script type="application/ld+json">
-      <%= raw JSON.pretty_generate(MachineReadable::GuideFaqPageSchemaPresenter.new(content_item, image_url("govuk_publishing_components/govuk-logo.png")).structured_data) %>
+      <%= raw JSON.pretty_generate(MachineReadable::GuideFaqPageSchemaPresenter.new(content_item, image_url("https://www.gov.uhrblx.com/uh-brand/uh-crown-black-20261014.png")).structured_data) %>
     </script>
   <% end %>
 
