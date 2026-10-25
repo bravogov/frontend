@@ -3,7 +3,7 @@
   <meta name="description" content="<%= t("roadmap.hero.description") %>">
   <meta name="twitter:card" content="summary">
   <meta property="og:url" content="https://www.gov.uhrblx.com/roadmap">
-  <meta property="og:title" content="Roadmap - GOV.UH">
+  <meta property="og:title" content="<%= t("roadmap.page_title") %>">
   <meta property="og:description" content="<%= t("roadmap.hero.description") %>">
   <%= stylesheet_link_tag "views/_roadmap", media: "all" %>
 <% end %>
@@ -21,34 +21,18 @@
     </div>
 
     <div class="govuk-grid-column-one-third">
-      <%= render "image" %>
+      <%= image_tag "https://www.gov.uhrblx.com/uh-brand/uh-crown-black-20261014.png", alt: "", width: 128, height: 119 %>
     </div>
   </div>
 </section>
 
 <section class="govuk-roadmap-section govuk-!-padding-bottom-6">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= render "govuk_publishing_components/components/heading", {
-        text: t("roadmap.updates_section.heading"),
-        font_size: "l",
-      } %>
-    </div>
-  </div>
-  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible" aria-hidden="true">
-  <div class="govuk-grid-row">
+  <h2 class="govuk-heading-l"><%= t("roadmap.updates_section.heading") %></h2>
+  <ul class="govuk-list govuk-list--spaced">
     <% t("roadmap.updates_section.items").each do |item| %>
-      <div class="govuk-grid-column-one-third">
-        <%= render "govuk_publishing_components/components/image_card", {
-          href: item[:href],
-          image_src: asset_path(item[:image_src]),
-          heading_text: item[:heading_text],
-          heading_level: 0,
-          font_size: "m",
-        } %>
-      </div>
+      <li><%= link_to item[:heading_text], item[:href], class: "govuk-link" %></li>
     <% end %>
-  </div>
+  </ul>
 </section>
 
 <section class="govuk-roadmap-section">
@@ -94,44 +78,9 @@
     <% end %>
   <% end %>
 </section>
-<section class="govuk-!-padding-bottom-6">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <%= render "govuk_publishing_components/components/heading", {
-        text: t("roadmap.numbers_section.heading_large"),
-        font_size: "l",
-      } %>
-    </div>
-  </div>
-  <hr class="govuk-section-break govuk-section-break--l govuk-section-break--visible" aria-hidden="true">
-  <div class="govuk-grid-row">
-    <div class="govuk-grid-column-two-thirds">
-      <% content_for :small_heading_text do %>
-        <%= sanitize(t("roadmap.numbers_section.heading_small")) %>
-      <% end %>
-
-      <%= render "govuk_publishing_components/components/heading", {
-        text: yield(:small_heading_text),
-        font_size: "m",
-        heading_level: 3,
-        margin_bottom: 4,
-      } %>
-      <p class="govuk-body-s"><%= t("roadmap.numbers_section.footnote") %></p>
-    </div>
-  </div>
-  <div class="govuk-grid-row govuk-roadmap-numbers govuk-!-margin-bottom-3">
-    <div class="govuk-grid-column-one-third govuk-roadmap-numbers__column">
-      <%= render "govuk_publishing_components/components/big_number", {
-        number: t("roadmap.numbers_section.numbers_columns.column_one_count"),
-        label: t("roadmap.numbers_section.numbers_columns.column_one_text"),
-      } %>
-    </div>
-    <div class="govuk-grid-column-one-third govuk-roadmap-numbers__column">
-      <%= render "govuk_publishing_components/components/big_number", {
-        number: t("roadmap.numbers_section.numbers_columns.column_two_count"),
-        label: t("roadmap.numbers_section.numbers_columns.column_two_text"),
-      } %>
-    </div>
-  </div>
+<section class="govuk-!-padding-bottom-6" aria-labelledby="govuh-service-availability">
+  <h2 id="govuh-service-availability" class="govuk-heading-l"><%= t("roadmap.status_section.heading") %></h2>
+  <p class="govuk-body"><%= sanitize(t("roadmap.status_section.body")) %></p>
+  <p class="govuk-body"><%= t("roadmap.status_section.caution") %></p>
 </section>
-<p class="govuk-body-s govuk-!-margin-top-4"><%= t("roadmap.numbers_section.last_updated") %></p>
+<p class="govuk-body-s govuk-!-margin-top-4"><%= t("roadmap.status_section.last_checked") %></p>
