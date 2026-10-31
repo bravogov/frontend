@@ -6,32 +6,71 @@
 <% end %>
 <% content_for :title, t("homepage.index.intro_title.text") %>
 <% content_for :main_classes, "govuk-!-padding-top-0" %>
-<% content_for :body_classes, "homepage" %><%# The `homepage` body class is required for emergency banner. %>
+<% content_for :body_classes, "homepage" %>
 
 <%
-  # The GA4 tracking on the homepage depends on some hardcoded values for index. If a section is added or removed, these values will need to be updated.
-  # Specifically 'index_section_count' (the total number of sections) and 'index_section' (the index of the section e.g. 2 for the 2nd section).
   index_section_count = 6
+  categories = t("homepage.categories")
+  government_activity = t("homepage.government_activity")
+  promotion_slots = t("homepage.index.promotion_slots")
+  secondary_promotion_slots = I18n.exists?("homepage.index.promotion_slots_secondary") ? t("homepage.index.promotion_slots_secondary") : []
+  more_links = t("homepage.index.more_links")
 %>
 
 <%= render "homepage_header" %>
-<%= render "homepage/popular_links", locals: { index_section: 2, index_section_count: index_section_count } %>
+<% if content_item.popular_links.present? %>
+  <%= render "homepage/popular_links", locals: { index_section: 2, index_section_count: index_section_count } %>
+<% else %>
+  <section class="homepage-section homepage-section__popular-links" aria-labelledby="uh-service-shortcuts-heading">
+    <div class="govuk-width-container">
+      <div class="govuk-grid-row">
+        <div class="govuk-grid-column-full">
+          <h2 class="govuk-heading-l" id="uh-service-shortcuts-heading">Use a government service</h2>
+          <ul class="homepage-most-viewed-list" data-module="ga4-link-tracker">
+            <% [
+              ["Find your local council", "/find-local-council"],
+              ["Make a freedom of information request", "/make-a-freedom-of-information-request"],
+              ["Write to Cabinet Office ministers", "/write-to-cabinet-office-ministers"],
+              ["Report a problem with GOV.UH", "/contact/gov-uh"],
+              ["Search United Hampshire legislation", "/search-united-hampshire-legislation"],
+              ["Search government publications and guidance", "/search-government-publications-and-guidance"]
+            ].each do |label, destination| %>
+              <li class="homepage-most-viewed-list__item">
+                <%= render "govuk_publishing_components/components/action_link", text: label, href: destination, large: true %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+<% end %>
 
-<div class="govuk-width-container">
-  <div class="border-top-blue-from-desktop">
-    <div class="govuk-grid-row">
-      <div class="govuk-grid-column-full govuk-grid-column-two-thirds-from-desktop">
-        <%= render "homepage/services_and_information", locals: { index_section: 3, index_section_count: index_section_count } %>
+<% if categories.present? || promotion_slots.present? || secondary_promotion_slots.present? || government_activity.present? || more_links.present? %>
+  <div class="govuk-width-container">
+    <% if categories.present? || promotion_slots.present? || secondary_promotion_slots.present? %>
+      <div class="homepage-services-content">
+        <div class="govuk-grid-row">
+          <% if categories.present? %>
+            <div class="govuk-grid-column-full govuk-grid-column-two-thirds-from-desktop">
+              <%= render "homepage/services_and_information", locals: { index_section: 3, index_section_count: index_section_count } %>
+            </div>
+          <% end %>
+          <% if promotion_slots.present? || secondary_promotion_slots.present? %>
+            <div class="govuk-grid-column-full govuk-grid-column-one-third-from-desktop">
+              <%= render "homepage/promotion_slots", locals: { index_section: 4, index_section_count: index_section_count } %>
+            </div>
+          <% end %>
+        </div>
       </div>
-      <div class="govuk-grid-column-full govuk-grid-column-one-third-from-desktop">
-        <%= render "homepage/promotion_slots", locals: { index_section: 4, index_section_count: index_section_count } %>
+    <% end %>
+    <% if government_activity.present? || more_links.present? %>
+      <div class="border-top-blue-from-desktop">
+        <div class="govuk-grid-row">
+          <%= render "homepage/government_activity", locals: { index_section: 5, index_section_count: index_section_count } if government_activity.present? %>
+          <%= render "homepage/more_on_govuk", locals: { index_section: 6, index_section_count: index_section_count } if more_links.present? %>
+        </div>
       </div>
-    </div>
+    <% end %>
   </div>
-  <div class="border-top-blue-from-desktop">
-    <div class="govuk-grid-row">
-      <%= render "homepage/government_activity", locals: { index_section: 5, index_section_count: index_section_count } %>
-      <%= render "homepage/more_on_govuk", locals: { index_section: 6, index_section_count: index_section_count } %>
-    </div>
-  </div>
-</div>
+<% end %>

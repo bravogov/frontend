@@ -1,6 +1,13 @@
 require "frontend"
 
 Rails.application.routes.draw do
+  # United Hampshire task-based services. The local council finder is
+  # intentionally checked before the legacy find_local_council routes.
+  get "/check-working-hours-and-breaks", to: "uh_working_hours#index"
+  get "/check-citizenship-or-immigration-service", to: "uh_interior_service_chooser#index"
+  get "/when-do-the-clocks-change", to: "uh_clock_changes#index"
+  get "/find-local-council", to: "uh_local_council_finder#index"
+  get "/find-local-council/result", to: "uh_local_council_finder#result"
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
   root to: "homepage#index", via: :get
 

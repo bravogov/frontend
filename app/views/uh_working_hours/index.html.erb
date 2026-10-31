@@ -1,0 +1,42 @@
+<% content_for :title, "Check working hours and rest breaks - GOV.UH" %>
+<div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
+<%= render "govuk_publishing_components/components/heading", text:"Check working hours and rest breaks", font_size:"xl", margin_bottom:6, heading_level:1 %>
+<p class="govuk-body-l">Enter your usual working hours to see relevant working-time guidance.</p>
+<p class="govuk-body">England's employment-law arrangements are different from Havenstead's public-service and voluntary-work arrangements. This checker does not make a legal decision or submit a complaint.</p>
+<% if @error %><div class="govuk-error-summary" role="alert" aria-labelledby="hours-error"><h2 class="govuk-error-summary__title" id="hours-error">There is a problem</h2><p class="govuk-body"><%= @error %></p></div><% end %>
+<%= form_with url:"/check-working-hours-and-breaks", method: :get, local:true do %>
+  <div class="govuk-form-group"><label class="govuk-label govuk-label--m" for="place">Where is the work or public-service role?</label>
+    <select class="govuk-select" id="place" name="place">
+      <option value="england" <%= 'selected' if @values["place"]=="england" %>>England — UK working-time rules</option>
+      <option value="havenstead" <%= 'selected' if @values["place"]=="havenstead" %>>Havenstead — UH public-service or voluntary role</option>
+    </select>
+  </div>
+  <div class="govuk-form-group"><label class="govuk-label govuk-label--m" for="age">Age group</label>
+    <select class="govuk-select" id="age" name="age">
+      <option value="adult" <%= 'selected' if @values["age"]=="adult" %>>18 or over</option>
+      <option value="young" <%= 'selected' if @values["age"]=="young" %>>Above school-leaving age and under 18</option>
+    </select>
+  </div>
+  <div class="govuk-form-group"><label class="govuk-label govuk-label--m" for="weekly">Hours worked per week</label>
+    <div class="govuk-hint" id="weekly-hint">For adults in England, the 48-hour limit normally applies to the average over 17 weeks. Include working time from more than one job.</div>
+    <input class="govuk-input govuk-input--width-5" id="weekly" name="weekly" type="number" step="0.25" min="0" max="168" required value="<%= @values["weekly"] %>" aria-describedby="weekly-hint">
+  </div>
+  <div class="govuk-form-group"><label class="govuk-label govuk-label--m" for="longest">Hours in your longest working day</label>
+    <input class="govuk-input govuk-input--width-5" id="longest" name="longest" type="number" step="0.25" min="0" max="24" required value="<%= @values["longest"] %>">
+  </div>
+  <div class="govuk-form-group"><label class="govuk-label govuk-label--m" for="break_minutes">Minutes of uninterrupted break during that day</label>
+    <div class="govuk-hint" id="break-hint">Do not count a break spent working.</div>
+    <input class="govuk-input govuk-input--width-5" id="break_minutes" name="break_minutes" type="number" min="0" max="1440" required value="<%= @values["break_minutes"] %>" aria-describedby="break-hint">
+  </div>
+  <button class="govuk-button" type="submit">Check hours and breaks</button>
+<% end %>
+<% if @submitted && !@error %>
+  <section aria-labelledby="working-hours-result" class="govuk-inset-text"><h2 id="working-hours-result" class="govuk-heading-m">Your results</h2>
+    <% @findings.each do |message| %><p class="govuk-body"><%= message %></p><% end %>
+    <p class="govuk-body">These are screening results only. Exceptions, working patterns, contractual terms and the law applicable to the role may change the answer.</p>
+  </section>
+<% end %>
+<h2 class="govuk-heading-m govuk-!-margin-top-7">What to do if you have a concern</h2>
+<p class="govuk-body">Review the relevant working arrangements with your employer or appointing authority. For a United Hampshire public-service dispute within its remit, Acas provides advice and early conciliation. Health and Safety Executive regulates the workplace matters assigned to it.</p>
+<p class="govuk-body"><a class="govuk-link" href="/employment-rights-and-employer-responsibilities">Read the existing employment rights guidance</a>.</p>
+</div></div>

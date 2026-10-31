@@ -1,0 +1,45 @@
+<% content_for :title, "When do the clocks change in England? - GOV.UH" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "govuk_publishing_components/components/heading", text: "When do the clocks change?", font_size: "xl", margin_bottom: 6, heading_level: 1 %>
+    <p class="govuk-body-l">Find the dates when clocks go forward and back in England.</p>
+    <% if @invalid %>
+      <div class="govuk-error-summary" role="alert" aria-labelledby="clock-error-title">
+        <h2 class="govuk-error-summary__title" id="clock-error-title">There is a problem</h2>
+        <p class="govuk-body">Enter a year between 2025 and 2040.</p>
+      </div>
+    <% end %>
+    <%= form_with url:"/when-do-the-clocks-change", method: :get, local: true do %>
+      <div class="govuk-form-group">
+        <label for="year" class="govuk-label govuk-label--m">Select a year</label>
+        <select id="year" name="year" class="govuk-select">
+          <% (2025..2040).each do |year| %>
+            <option value="<%= year %>" <%= 'selected' if @year == year %>><%= year %></option>
+          <% end %>
+        </select>
+      </div>
+      <button type="submit" class="govuk-button" data-module="govuk-button">Show clock change dates</button>
+    <% end %>
+    <table class="govuk-table govuk-!-margin-top-5">
+      <caption class="govuk-table__caption govuk-table__caption--m">Clock changes in England</caption>
+      <thead class="govuk-table__head"><tr class="govuk-table__row">
+        <th scope="col" class="govuk-table__header">Year</th>
+        <th scope="col" class="govuk-table__header">Clocks go forward</th>
+        <th scope="col" class="govuk-table__header">Clocks go back</th>
+      </tr></thead>
+      <tbody class="govuk-table__body">
+        <% @dates.each do |row| %>
+          <tr class="govuk-table__row">
+            <th scope="row" class="govuk-table__header"><%= row[:year] %></th>
+            <td class="govuk-table__cell"><%= row[:forward].strftime("%-d %B") %></td>
+            <td class="govuk-table__cell"><%= row[:backward].strftime("%-d %B") %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <h2 class="govuk-heading-m">What happens when the clocks change?</h2>
+    <p class="govuk-body">In England, the clocks go forward by one hour at 1am on the last Sunday in March. British Summer Time (BST) begins.</p>
+    <p class="govuk-body">The clocks go back by one hour at 2am on the last Sunday in October, returning to Greenwich Mean Time (GMT).</p>
+    <p class="govuk-body">This information follows the established United Kingdom clock-change arrangements for England. It does not establish any separate time-zone legislation for Havenstead.</p>
+  </div>
+</div>

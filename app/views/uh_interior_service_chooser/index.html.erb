@@ -1,0 +1,54 @@
+<% content_for :title, "Check which citizenship or immigration service to use - GOV.UH" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "govuk_publishing_components/components/heading", text: "Check which citizenship or immigration service to use", font_size: "xl", margin_bottom: 6, heading_level: 1 %>
+    <p class="govuk-body-l">Choose what you want to do. This service identifies the relevant Interior Office process and explains the next steps.</p>
+    <p class="govuk-body">Citizenship, British nationality, immigration permission, residence and settlement are different statuses. Roblox or Discord account access does not itself grant any of them.</p>
+
+    <% if @error %>
+      <div class="govuk-error-summary" role="alert" aria-labelledby="chooser-error-title">
+        <h2 class="govuk-error-summary__title" id="chooser-error-title">There is a problem</h2>
+        <p class="govuk-body">Select one of the listed services.</p>
+      </div>
+    <% end %>
+
+    <%= form_with url: "/check-citizenship-or-immigration-service", method: :get, local: true do %>
+      <div class="govuk-form-group <%= 'govuk-form-group--error' if @error %>">
+        <label class="govuk-label govuk-label--m" for="service">What do you need to do?</label>
+        <select class="govuk-select govuk-!-width-full" name="service" id="service" required>
+          <option value="">Choose an option</option>
+          <optgroup label="Citizenship and nationality">
+            <% @routes.each do |key, data| %>
+              <% if data[:category] == :citizenship %>
+                <option value="<%= key %>" <%= 'selected' if @selected == key %>><%= data[:label] %></option>
+              <% end %>
+            <% end %>
+          </optgroup>
+          <optgroup label="Visas, residence and immigration">
+            <% @routes.each do |key, data| %>
+              <% if data[:category] == :immigration %>
+                <option value="<%= key %>" <%= 'selected' if @selected == key %>><%= data[:label] %></option>
+              <% end %>
+            <% end %>
+          </optgroup>
+        </select>
+      </div>
+      <button class="govuk-button" type="submit" data-module="govuk-button">Check which service to use</button>
+    <% end %>
+    <% if @route %>
+      <div class="govuk-inset-text govuk-!-margin-top-6">
+        <h2 class="govuk-heading-m">Your service: <%= @route[:service] %></h2>
+        <p class="govuk-body"><%= @route[:advice] %></p>
+        <p class="govuk-body"><strong>Responsible service:</strong> Immigration and Citizenship Service, Interior Office<%= " (with assigned UH Visas and Immigration casework)" if @route[:category] == :immigration %>.</p>
+        <% if @route[:form_id] %>
+          <p class="govuk-body">GOV.UH Forms has an existing application for this type of request. <strong>Its public submission route is not yet open.</strong> The casework receiving, staff access and correspondence arrangements must be accepted before applications can be submitted.</p>
+        <% else %>
+          <p class="govuk-body">A separate dedicated online application is not yet available for this enquiry. Do not use an unrelated application form.</p>
+        <% end %>
+        <p class="govuk-body"><a class="govuk-link" href="<%= @route[:category] == :citizenship ? '/citizenship-status-and-participation' : '/visas-entry-clearance-and-citizenship' %>">Read the existing service guidance</a>.</p>
+        <p class="govuk-body"><a class="govuk-link" href="/government/organisations/interior-office">Interior Office information and contact routes</a>.</p>
+      </div>
+    <% end %>
+    <p class="govuk-body govuk-!-margin-top-6">This checker does not collect or retain personal information and does not decide eligibility, grant status or register an application.</p>
+  </div>
+</div>
