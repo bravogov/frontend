@@ -26,16 +26,16 @@ class UhWorkingHoursController < ApplicationController
       if @error.nil?
         if @values["place"] == "england"
           if @values["age"] == "young"
-            @findings << (@weekly > 40 ? "The weekly figure exceeds the usual 40-hour UK limit for a young worker." : "The weekly figure does not exceed the usual 40-hour UK limit for a young worker.")
-            @findings << (@longest > 8 ? "The longest shift exceeds the usual 8-hour daily limit for a young worker." : "The longest shift does not exceed the usual 8-hour daily limit for a young worker.")
-            @findings << (@longest > 4.5 && @break_minutes < 30 ? "The break entered is shorter than the usual 30-minute break for a young worker working more than 4.5 hours." : "The break information does not show a breach of the ordinary young-worker minimum.")
+            @findings << (@weekly > 40 ? "The hours entered are above the usual 40-hour weekly limit for young workers in England." : "The hours entered are within the usual 40-hour weekly limit for young workers in England.")
+            @findings << (@longest > 8 ? "The longest working day entered is above the usual 8-hour limit for young workers in England." : "The longest working day entered is within the usual 8-hour limit for young workers in England.")
+            @findings << (@longest > 4.5 && @break_minutes < 30 ? "Young workers in England who work for more than 4.5 hours are normally entitled to a 30-minute rest break. The break entered is shorter than this." : "The break entered meets the usual young-worker minimum for the length of day entered.")
           else
-            @findings << (@weekly > 48 ? "The hours entered exceed 48 a week. For adults the UK limit is ordinarily assessed as an average over 17 weeks; one typical week alone cannot establish a breach." : "The hours entered do not exceed 48 in this week. UK adults are ordinarily assessed using an average over 17 weeks.")
-            @findings << (@longest > 6 && @break_minutes < 20 ? "The break entered is shorter than the usual uninterrupted 20-minute rest break for a working day exceeding 6 hours." : "The break information does not show a breach of the ordinary adult minimum.")
+            @findings << (@weekly > 48 ? "The hours entered are above 48 this week. The usual limit for adults in England is an average of 48 hours a week over 17 weeks, not a limit on every individual week." : "The hours entered are below 48 this week. The usual limit for adults in England is an average of 48 hours a week over 17 weeks.")
+            @findings << (@longest > 6 && @break_minutes < 20 ? "Adults working for more than 6 hours in England are normally entitled to an uninterrupted 20-minute rest break. The break entered is shorter than this." : "The break entered meets the usual minimum for the length of working day entered.")
           end
         else
-          @findings << "You entered #{@weekly} hours per week and a longest shift of #{@longest} hours. These figures do not themselves establish compliance with United Hampshire public-service or voluntary-work requirements."
-          @findings << "Check the relevant role terms and Department for Work and Skills arrangements. Acas supports in-scope public-service and voluntary-work disputes; HSE handles its assigned safety and regulatory functions."
+          @findings << "You entered #{@weekly} hours a week and a longest working day of #{@longest} hours. The terms of your Havenstead role determine which working-time arrangements apply."
+          @findings << "Check your appointment or voluntary-work terms. If you need advice about an employment dispute, contact Acas. For a workplace health and safety concern, contact the Health and Safety Executive."
         end
       end
       response.status = :unprocessable_entity if @error
