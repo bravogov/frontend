@@ -1,6 +1,7 @@
 require "frontend"
 
 Rails.application.routes.draw do
+  get "/calculate-holiday-entitlement", to: "uh_holiday_entitlement#index"
   # United Hampshire task-based services. The local council finder is
   # intentionally checked before the legacy find_local_council routes.
   get "/check-working-hours-and-breaks", to: "uh_working_hours#index"

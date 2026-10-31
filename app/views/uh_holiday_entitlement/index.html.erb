@@ -1,0 +1,35 @@
+<% content_for :title, "Calculate holiday entitlement for regular-hours work in England - GOV.UH" %>
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "govuk_publishing_components/components/heading", text: "Calculate holiday entitlement", font_size: "xl", margin_bottom: 6, heading_level: 1 %>
+    <p class="govuk-body-l">Calculate statutory paid holiday for regular-hours work in England during a full leave year.</p>
+    <p class="govuk-body">This calculator is for workers who work a fixed number of days each week, with working days of the same length, throughout a full holiday year.</p>
+    <p class="govuk-body">If you work irregular hours, only part of the year, or days of different lengths, your holiday entitlement needs a different calculation. This calculator does not cover Havenstead public-service or voluntary-work arrangements.</p>
+    <% if @error %>
+      <div class="govuk-error-summary" role="alert" aria-labelledby="holiday-error-title">
+        <h2 class="govuk-error-summary__title" id="holiday-error-title">There is a problem</h2>
+        <p class="govuk-body"><%= @error %></p>
+      </div>
+    <% end %>
+    <%= form_with url: "/calculate-holiday-entitlement", method: :get, local: true do %>
+      <div class="govuk-form-group <%= 'govuk-form-group--error' if @error %>">
+        <label class="govuk-label govuk-label--m" for="days">How many days a week do you normally work?</label>
+        <div class="govuk-hint" id="holiday-days-hint">For example, 3 or 5. Enter half-days as 0.5, 1.5 or 2.5.</div>
+        <input class="govuk-input govuk-input--width-5" type="number" id="days" name="days" min="0.5" max="7" step="0.5" required aria-describedby="holiday-days-hint" value="<%= @days_input %>">
+      </div>
+      <button class="govuk-button" type="submit">Calculate entitlement</button>
+    <% end %>
+    <% if @entitlement %>
+      <section class="govuk-inset-text" aria-labelledby="holiday-results-title">
+        <h2 class="govuk-heading-m" id="holiday-results-title">Your annual leave entitlement</h2>
+        <p class="govuk-body-l"><strong><%= number_with_precision(@entitlement, precision: 1) %> days</strong></p>
+        <p class="govuk-body">This is the statutory minimum for a complete leave year, including any bank holidays your employer counts as paid leave.</p>
+        <p class="govuk-body">Your contract may provide more leave. If you start or leave during the holiday year, the amount you receive may be different.</p>
+      </section>
+    <% end %>
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">How holiday entitlement is calculated</h2>
+    <p class="govuk-body">Workers in England are normally entitled to 5.6 weeks of statutory paid leave each year. Multiply the number of regular working days per week by 5.6, subject to a maximum of 28 days.</p>
+    <p class="govuk-body">Your employer may count bank holidays within this entitlement. Bank holidays are not always extra paid days off.</p>
+    <p class="govuk-body"><a class="govuk-link" href="/employment-rights-and-employer-responsibilities">Read about employment rights and employer responsibilities</a>.</p>
+  </div>
+</div>
