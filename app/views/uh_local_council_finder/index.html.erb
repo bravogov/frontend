@@ -16,7 +16,7 @@
     <%= form_with url: "/find-local-council/result", method: :get, local: true, html: { novalidate: true } do %>
       <div class="govuk-form-group <%= 'govuk-form-group--error' if @error.present? %>">
         <label class="govuk-label govuk-label--m" for="area">Which Havenstead local area do you live in or need services for?</label>
-        <div class="govuk-hint" id="area-hint">Choose the area you know. Havenstead does not yet have an agreed postcode-to-council lookup.</div>
+        <div class="govuk-hint" id="area-hint">Choose the area you know. Choose the local area. You cannot search by postcode yet.</div>
         <select class="govuk-select" id="area" name="area" aria-describedby="area-hint" required>
           <option value="">Select an area</option>
           <optgroup label="Steadfast">
@@ -45,8 +45,8 @@
     <% end %>
 
     <h2 class="govuk-heading-m govuk-!-margin-top-7">If you need a council in England</h2>
-    <p class="govuk-body">England and Havenstead have different local government arrangements. For Hampshire and Isle of Wight services, use the appropriate authority's published service route. This finder covers recognised Havenstead local areas only.</p>
-    <p class="govuk-body"><a class="govuk-link" href="/find-your-council-and-local-services">Understand local government responsibilities across United Hampshire</a>.</p>
-    <p class="govuk-body">Selecting an area is for finding information. It does not register your residence or decide eligibility for a service.</p>
+    <p class="govuk-body">This finder covers Havenstead. For services in England, check the relevant council's website or the published local government guidance.</p>
+    <p class="govuk-body"><a class="govuk-link" href="/find-your-council-and-local-services">Find out who provides local services</a>.</p>
+    <p class="govuk-body">Choosing an area does not register your address or apply for a service.</p>
   </div>
 </div>
