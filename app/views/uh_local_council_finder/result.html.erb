@@ -2,33 +2,33 @@
 
 <div class="govuk-grid-row">
   <div class="govuk-grid-column-two-thirds">
-    <%= render "govuk_publishing_components/components/heading", text: "Your local council result", font_size: "xl", margin_bottom: 5, heading_level: 1 %>
+    <%= render "govuk_publishing_components/components/heading", text: "Your council", font_size: "xl", margin_bottom: 5, heading_level: 1 %>
 
     <p class="govuk-body-l"><%= @area.fetch(:name) %> is a recognised local area of <%= @area.fetch(:region) %>, Havenstead.</p>
 
     <h2 class="govuk-heading-m"><%= @area.fetch(:council) %></h2>
 
     <% if @area.fetch(:operational) %>
-      <p class="govuk-body">The council forms part of Havenstead's initial active local government structure.</p>
+      <p class="govuk-body">This council is operating.</p>
       <p class="govuk-body">You selected: <strong><%= @service %></strong>.</p>
-      <p class="govuk-body">Local councils may exercise assigned functions for services such as libraries, neighbourhoods, recreation and community support. Check the council's published services for this activity; not every function is administered by the local council.</p>
+      <p class="govuk-body">Check the council website to find out whether it provides this service and how to use it.</p>
       <p><a class="govuk-button" href="<%= @area.fetch(:website) %>">Visit <%= @area.fetch(:council) %></a></p>
     <% else %>
       <div class="govuk-inset-text">
         <strong><%= @area.fetch(:council) %> has not commenced operations.</strong>
-        The local area is recognised, but there is no operating council service to which an application can be submitted.
+        The council is not operating and cannot receive applications.
       </div>
-      <p class="govuk-body">You selected: <strong><%= @service %></strong>. Check the currently responsible Government or strategic authority for this service. Do not treat a proposed council service or a future council's website as a receiving authority.</p>
+      <p class="govuk-body">You selected: <strong><%= @service %></strong>. For help finding the current service provider, see the Ministry of Infrastructure, Communities and Local Government.</p>
       <p class="govuk-body"><a class="govuk-link" href="/government/organisations/ministry-of-infrastructure-communities-and-local-government">Ministry of Infrastructure, Communities and Local Government</a></p>
     <% end %>
 
     <% if params[:service] == "elections" %>
-      <p class="govuk-body">Electoral wards, boundaries and councillor allocations must be determined through the competent boundary and electoral processes. This result does not establish your electoral registration or ward.</p>
+      <p class="govuk-body">This finder cannot identify your electoral ward or councillor. Check the published electoral boundaries and councillor information when these have been confirmed.</p>
     <% end %>
 
     <h2 class="govuk-heading-m govuk-!-margin-top-6">Other local services</h2>
-    <p class="govuk-body">Some functions belong to central Government, Hampshire County Government, a strategic authority or an independent public body rather than a local council.</p>
-    <p class="govuk-body"><a class="govuk-link" href="/find-your-council-and-local-services">Read how local services are organised</a>.</p>
+    <p class="govuk-body">Not every local service is provided by a council. The Government and other public authorities also have responsibilities.</p>
+    <p class="govuk-body"><a class="govuk-link" href="/find-your-council-and-local-services">Find out who provides local services</a>.</p>
 
     <p class="govuk-body govuk-!-margin-top-8"><a class="govuk-link" href="/find-local-council">Search for another local area or service</a></p>
   </div>
