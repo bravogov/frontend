@@ -1,8 +1,8 @@
 <% content_for :title, "Check working hours and rest breaks - GOV.UH" %>
 <div class="govuk-grid-row"><div class="govuk-grid-column-two-thirds">
 <%= render "govuk_publishing_components/components/heading", text:"Check working hours and rest breaks", font_size:"xl", margin_bottom:6, heading_level:1 %>
-<p class="govuk-body-l">Enter your usual working hours to see relevant working-time guidance.</p>
-<p class="govuk-body">England's employment-law arrangements are different from Havenstead's public-service and voluntary-work arrangements. This checker does not make a legal decision or submit a complaint.</p>
+<p class="govuk-body-l">Enter your working hours and rest breaks to check the usual rules and find out where to get advice.</p>
+<p class="govuk-body">Working-time rules in England differ from the arrangements for public-service and voluntary roles in Havenstead.</p>
 <% if @error %><div class="govuk-error-summary" role="alert" aria-labelledby="hours-error"><h2 class="govuk-error-summary__title" id="hours-error">There is a problem</h2><p class="govuk-body"><%= @error %></p></div><% end %>
 <%= form_with url:"/check-working-hours-and-breaks", method: :get, local:true do %>
   <div class="govuk-form-group"><label class="govuk-label govuk-label--m" for="place">Where is the work or public-service role?</label>
@@ -31,12 +31,12 @@
   <button class="govuk-button" type="submit">Check hours and breaks</button>
 <% end %>
 <% if @submitted && !@error %>
-  <section aria-labelledby="working-hours-result" class="govuk-inset-text"><h2 id="working-hours-result" class="govuk-heading-m">Your results</h2>
+  <section aria-labelledby="working-hours-result" class="govuk-inset-text"><h2 id="working-hours-result" class="govuk-heading-m">What your answers mean</h2>
     <% @findings.each do |message| %><p class="govuk-body"><%= message %></p><% end %>
-    <p class="govuk-body">These are screening results only. Exceptions, working patterns, contractual terms and the law applicable to the role may change the answer.</p>
+    <p class="govuk-body">This is guidance based on the hours you entered. Different rules may apply to particular jobs or working patterns.</p>
   </section>
 <% end %>
-<h2 class="govuk-heading-m govuk-!-margin-top-7">What to do if you have a concern</h2>
-<p class="govuk-body">Review the relevant working arrangements with your employer or appointing authority. For a United Hampshire public-service dispute within its remit, Acas provides advice and early conciliation. Health and Safety Executive regulates the workplace matters assigned to it.</p>
-<p class="govuk-body"><a class="govuk-link" href="/employment-rights-and-employer-responsibilities">Read the existing employment rights guidance</a>.</p>
+<h2 class="govuk-heading-m govuk-!-margin-top-7">Get help with a problem at work</h2>
+<p class="govuk-body">If you think your working hours or breaks are wrong, ask your employer or the person responsible for your role to explain the arrangements. If you need further help, <a class="govuk-link" href="/government/organisations/acas">contact Acas</a> for employment-relations advice or conciliation. To raise a workplace health and safety concern, <a class="govuk-link" href="/government/organisations/health-and-safety-executive">contact the Health and Safety Executive</a>.</p>
+<p class="govuk-body"><a class="govuk-link" href="/employment-rights-and-employer-responsibilities">Read about employment rights and employer responsibilities</a>.</p>
 </div></div>
