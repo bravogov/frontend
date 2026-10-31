@@ -1,0 +1,52 @@
+<% content_for :title, "Find your local council - GOV.UH" %>
+
+<div class="govuk-grid-row">
+  <div class="govuk-grid-column-two-thirds">
+    <%= render "govuk_publishing_components/components/heading", text: "Find your local council", font_size: "xl", margin_bottom: 6, heading_level: 1 %>
+
+    <p class="govuk-body-l">Find the council serving a recognised area of Havenstead and the services it is responsible for.</p>
+
+    <% if @error.present? %>
+      <div class="govuk-error-summary" role="alert" tabindex="-1" aria-labelledby="finder-error-title">
+        <h2 class="govuk-error-summary__title" id="finder-error-title">There is a problem</h2>
+        <div class="govuk-error-summary__body"><p class="govuk-body"><%= @error %></p></div>
+      </div>
+    <% end %>
+
+    <%= form_with url: "/find-local-council/result", method: :get, local: true, html: { novalidate: true } do %>
+      <div class="govuk-form-group <%= 'govuk-form-group--error' if @error.present? %>">
+        <label class="govuk-label govuk-label--m" for="area">Which Havenstead local area do you live in or need services for?</label>
+        <div class="govuk-hint" id="area-hint">Choose the area you know. Havenstead does not yet have an agreed postcode-to-council lookup.</div>
+        <select class="govuk-select" id="area" name="area" aria-describedby="area-hint" required>
+          <option value="">Select an area</option>
+          <optgroup label="Steadfast">
+            <% %w[alderstead brightmere stonehaven].each do |key| %>
+              <option value="<%= key %>" <%= 'selected' if @selected_area == key %>><%= @areas.fetch(key).fetch(:name) %></option>
+            <% end %>
+          </optgroup>
+          <optgroup label="Hearth">
+            <% %w[rosehaven bridgewell greenhaven].each do |key| %>
+              <option value="<%= key %>" <%= 'selected' if @selected_area == key %>><%= @areas.fetch(key).fetch(:name) %></option>
+            <% end %>
+          </optgroup>
+        </select>
+      </div>
+
+      <div class="govuk-form-group">
+        <label class="govuk-label govuk-label--m" for="service">What service are you looking for?</label>
+        <select class="govuk-select" id="service" name="service">
+          <% @services.each do |key, value| %>
+            <option value="<%= key %>" <%= 'selected' if @selected_service == key %>><%= value %></option>
+          <% end %>
+        </select>
+      </div>
+
+      <button class="govuk-button" data-module="govuk-button" type="submit">Find council and service</button>
+    <% end %>
+
+    <h2 class="govuk-heading-m govuk-!-margin-top-7">If you need a council in England</h2>
+    <p class="govuk-body">England and Havenstead have different local government arrangements. For Hampshire and Isle of Wight services, use the appropriate authority's published service route. This finder covers recognised Havenstead local areas only.</p>
+    <p class="govuk-body"><a class="govuk-link" href="/find-your-council-and-local-services">Understand local government responsibilities across United Hampshire</a>.</p>
+    <p class="govuk-body">Selecting an area is for finding information. It does not register your residence or decide eligibility for a service.</p>
+  </div>
+</div>
